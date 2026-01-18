@@ -3,19 +3,22 @@ import  { useGSAP } from "@gsap/react";
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useRef } from "react"
+import * as THREE from 'three';
 
 gsap.registerPlugin(ScrollTrigger)
 
 export function MainScene() {
     const boardRef = useRef();
-    const boardSpinRef = useRef();
-    const initialPosition = [-40, 0, 0];
+    const boardFlipRef = useRef();
+    const initialPosition = [0, 0, 0];
 
     function frame(f) {
         return( f / 30);
     }
 
     useGSAP( () => {
+        if (!boardRef.current) return;
+
         const timeline = gsap.timeline({
             scrollTrigger: {
                 trigger: 'body',
@@ -27,56 +30,36 @@ export function MainScene() {
         });
 
         timeline
-            .to(boardRef.current.position, {
-                x: "+=20",
-                y: 0,
-                z: 0,
-                duration: frame(20),
-            }, 0)
             .to(boardRef.current.rotation, {
-                z: "+=0.698",
+                z: "+=0.698132",
                 duration: frame(3),
-            }, frame(20))
+                ease: "linear",
+            }, frame(0))
             .to(boardRef.current.position, {
-                x: "+=3",
+                y: "+=2",
                 duration: frame(3),
-            }, frame(20))
-            .to(boardRef.current.position, {
-                y: "+=3",
-                duration: frame(3)
-            }, frame(23))
-            .to(boardRef.current.position, {
-                x: "+=3",
-                duration: frame(6),
-            }, frame(23))
+                ease: "linear",
+            }, frame(3))
             .to(boardRef.current.rotation, {
-                z: "-=0.698",
-                x: "-=6.28",
-                y: "-=6.28",
-                duration: frame(4),
-            }, frame(25))
+                z: "+=-0.698132",
+                y: "+=-3.14", // + is shuvit
+            }, frame(3))
+            .to(boardFlipRef.current.rotation, {
+                // x: "+=-6.28", // + is kickflip
+            }, frame(3))
             .to(boardRef.current.position, {
-                x: "+=3",
+                y: "-=2",
                 duration: frame(3),
-            }, frame(25))
-            .to(boardRef.current.position, {
-                y: "-=3",
-                x: "+=3",
-                duration: frame(3),
-            }, frame(31))
-            .to(boardRef.current.position, {
-                x: "+=30",
-                y: 0,
-                z: 0,
-                duration: frame(30),
-            }, frame(34))
+                ease: "linear",
+            })
     }, []);
+
 
 
     return(
         <>
         <group ref={boardRef} position={initialPosition}>
-            <group ref={boardSpinRef}>
+            <group ref={boardFlipRef}>
                 <Board />
             </group>
         </group>
