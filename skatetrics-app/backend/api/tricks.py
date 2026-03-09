@@ -8,6 +8,7 @@ CORS(backend.app)
 @backend.app.route('/api/v1/tricks/<trick>')
 def get_trick(trick):
 
+    print(f"The trick requested is {trick}")
     connection = backend.model.get_db()
     cur = connection.execute(
         "SELECT * FROM tricks WHERE trickname = ?", (trick,)

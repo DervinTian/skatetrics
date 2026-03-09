@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: black;
   --foreground: #171717;
 }
 
@@ -15,6 +15,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
+    /* --foreground: #ededed; */
     --foreground: #ededed;
   }
 }
@@ -36,4 +37,78 @@ body {
   width: 100%;
   z-index: 1;
   justify-content: space-between;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.home-body {
+  padding: 2em;
+  position: absolute;
+  top: 0vh;
+  background-color: green;
+}
+
+.dropdown-box {
+  color: black;
+  width: 25vw;
+  border: 1px solid rgb(0, 0, 0)
+}
+
+.dropdown-box .selected-item {
+  position: relative;
+}
+
+.dropdown-box .selected-item::after {
+  content: "";
+  width: 1em;
+  height: 1em;
+  border: 2px solid;
+  border-color: transparent rgb(129, 129, 129) rgb(129, 129, 129) transparent;
+  position: absolute;;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-70%) rotate(45deg);
+}
+
+.dropdown-box .selected-item,
+.dropdown-box .selected-item input {
+  cursor: pointer;
+}
+
+.dropdown-box .dropdown-content {
+  max-height: 100px;
+  overflow: auto;
+  display: none;
+}
+
+.dropdown-box.active .dropdown-content {
+  display: block;
+}
+
+.dropdown-box .dropdown-content ul li {
+  cursor: pointer;
+}
+
+.dropdown-box .dropdown-content ul li:hover {
+  background-color: rgb(245, 245, 245);
+}
+
+.dropdown-box .dropdown-content ul li.active {
+  background-color: rgb(213, 242, 246);
+}
+
+.dropdown-item {
+  color: black;
+}
+
+.selected-item{
+  border: 1px solid rgb(0, 0, 0)
+}
+
+.search-input {
+  border: 1px solid rgb(0, 0, 0)
 }

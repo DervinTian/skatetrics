@@ -3,10 +3,10 @@ import {Environment, OrbitControls} from "@react-three/drei"
 import {Canvas} from "@react-three/fiber"
 import { MainScene } from "./mainScene"
 
-export function MainCanvas() {
+export function MainCanvas({ trick, ridingStance }) {
 
     return (
-        <div className="w-screen h-screen fixed top-0 left-0" style={{backgroundColor: "black"}}>
+        <div className="w-screen h-screen fixed top-20 left-0" style={{backgroundColor: "black"}}>
             <Canvas
                 shadow
                 dpr={[1,2]}
@@ -16,7 +16,7 @@ export function MainCanvas() {
                 // onClick={canvasClicked}
             > 
                 <Environment files="/images/hill.jpg" />
-                <MainScene />
+                <MainScene trick={trick} ridingStance={ridingStance}/>
 
             </Canvas>
         </div>

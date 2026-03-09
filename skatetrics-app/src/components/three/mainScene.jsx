@@ -3,13 +3,15 @@ import  { useGSAP } from "@gsap/react";
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useEffect, useRef, useState } from "react"
+import { extend } from '@react-three/fiber'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export function MainScene() {
+export function MainScene({ trick, ridingStance }) {
     const boardRef = useRef();
     const boardFlipRef = useRef();
     const initialPosition = [0, 0, 0];
+    const reggoof = ridingStance === "Goofy" ? -1 : 1;
 
     const [rotations, setRotations] = useState({
         trickname: "",
@@ -26,8 +28,9 @@ export function MainScene() {
 
     useEffect( () => {
         let ignoreStaleRequest = false;
-
-        fetch("http://localhost:8000/api/v1/tricks/tre", { credentials: "same-origin" })
+        let timeline;
+        
+        fetch(`http://localhost:8000/api/v1/tricks/${trick}`, { credentials: "same-origin" })
         .then((response) => {
             if (!response.ok) throw Error(response.statusText);
             return response.json();
@@ -35,8 +38,7 @@ export function MainScene() {
         .then((data) => {
             if (!ignoreStaleRequest) {
                 setRotations(data);
-
-                if (!boardRef.current) return;
+                console.log(`${trick}`)
 
                 const timeline = gsap.timeline({
                     scrollTrigger: {
@@ -47,9 +49,11 @@ export function MainScene() {
                         markers: true,
                     }
                 });
+                var y_rot = reggoof * data.trick.y_rot;
+                var x_rot = reggoof * data.trick.x_rot;
                 timeline
                     .to(boardRef.current.rotation, {
-                        z: "+=0.698132",
+                        z: `+=${data.trick.z_rot}`, // - is nollie
                         duration: frame(3),
                         ease: "linear",
                     }, frame(0))
@@ -59,11 +63,11 @@ export function MainScene() {
                         ease: "linear",
                     }, frame(3))
                     .to(boardRef.current.rotation, {
-                        z: "+=-0.698132",
-                        y: `+=${data.trick.y_rot}`, // + is front shuvit
+                        z: `-=${data.trick.z_rot}`,
+                        y: `+=${y_rot}`, // + is front shuvit
                     }, frame(3))
                     .to(boardFlipRef.current.rotation, {
-                        x: `+=${data.trick.x_rot}`, // + is heelflip
+                        x: `+=${x_rot}`, // + is heelflip
                     }, frame(3))
                     .to(boardRef.current.position, {
                         y: "-=2",
@@ -76,11 +80,14 @@ export function MainScene() {
 
         return () => {
             ignoreStaleRequest = true;
+            if (timeline) timeline.kill(); // clean up on unmount or trick change
+            ScrollTrigger.getAll().forEach(st => st.kill()); // optional: remove old scroll triggers
         };
-    }, []);
+    }, [trick, ridingStance]);
 
     return(
         <>
+
         <group ref={boardRef} position={initialPosition}>
             <group ref={boardFlipRef}>
                 <Board />
