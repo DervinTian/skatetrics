@@ -1,6 +1,13 @@
 PRAGMA foreign_keys = ON;
 
 INSERT INTO tricks(trickname, x_rot, y_rot, z_rot)
+VALUES ('ollie', 
+        0, 
+        0, 
+        0.698132
+);
+
+INSERT INTO tricks(trickname, x_rot, y_rot, z_rot)
 VALUES ('kickflip', 
         -6.28, 
         0, 
@@ -15,35 +22,35 @@ VALUES ('heelflip',
 );
 
 INSERT INTO tricks(trickname, x_rot, y_rot, z_rot)
-VALUES ('tre', 
+VALUES ('tre flip', 
         -6.28, 
         -6.28, 
         0.698132
 );
 
 INSERT INTO tricks(trickname, x_rot, y_rot, z_rot)
-VALUES ('pop shuvit', 
+VALUES ('pop shuv', 
         0, 
         -3.14, 
         0.698132
 );
 
 INSERT INTO tricks(trickname, x_rot, y_rot, z_rot)
-VALUES ('front shuvit', 
+VALUES ('front shuv', 
         0, 
         3.14, 
         0.698132
 );
 
 INSERT INTO tricks(trickname, x_rot, y_rot, z_rot)
-VALUES ('three shuvit', 
+VALUES ('three shuv', 
         0, 
         -6.28, 
         0.698132
 );
 
 INSERT INTO tricks(trickname, x_rot, y_rot, z_rot)
-VALUES ('front three shuvit', 
+VALUES ('front three shuv', 
         0, 
         6.28, 
         0.698132

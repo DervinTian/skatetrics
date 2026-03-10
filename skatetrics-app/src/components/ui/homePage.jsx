@@ -36,18 +36,19 @@ export function HomePage() {
     const [inputValue, setInputValue] = useState("");
     const [submittedValue, setSubmittedValue] = useState("");
     const [ridingStance, setRidingStance] = useState("Regular");
+    const [trickStance, setTrickStance] = useState("Regular");
 
-    function SelectButtons({ value, setValue }) {
+    function SelectRidingStance({ value, setValue }) {
         const options = ["Regular", "Goofy"];
 
         return (
-            <div className="flex gap-3 text-white">
+            <div className="riding-stance">
             {options.map(option => (
                 <button
                 key={option}
                 onClick={() => setValue(option)}
                 className={`px-4 py-2 rounded 
-                    ${value === option ? "bg-blue-500 text-white" : "bg-gray-200"}
+                    ${value === option ? "bg-blue-500 text-black" : "bg-gray-200 text-black"}
                 `}
                 >
                 {option}
@@ -55,7 +56,28 @@ export function HomePage() {
             ))}
             </div>
         );
-        }
+    }
+
+    function SelectStance({ value, setValue }) {
+        const options = ["Regular", "Switch", "Fakie", "Nollie"];
+
+        return (
+            <div className="riding-stance">
+            {options.map(option => (
+                <button
+                key={option}
+                onClick={() => setValue(option)}
+                className={`px-4 py-2 rounded 
+                    ${value === option ? "bg-blue-500 text-black" : "bg-gray-200 text-black"}
+                `}
+                >
+                {option}
+                </button>
+            ))}
+            </div>
+        );
+    }
+
 
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
@@ -64,20 +86,24 @@ export function HomePage() {
     };
 
     return (
-        <>
+        <div className="selection-bar">
             <div className="home-body">
                 <input
+                    class="trick-bar"
                     type="text"
+                    placeholder="Search Trick"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
                 />
 
-                <SelectButtons value={ridingStance} setValue={setRidingStance} />
+                <SelectRidingStance value={ridingStance} setValue={setRidingStance} />
+                <SelectStance value={trickStance} setValue={setTrickStance} />
             </div>
 
-            <MainCanvas trick={submittedValue} ridingStance={ridingStance}/>
-        </>
+            <MainCanvas trick={submittedValue} ridingStance={ridingStance} trickStance={trickStance}/>
+        </div>
+
         // <div className="home-body">
         //     <div className="dropdown-box active">
         //         <div className="selected-item">

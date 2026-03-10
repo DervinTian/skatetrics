@@ -26,6 +26,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.selection-bar {
+  position: fixed;
+}
+
 .top-bar {
   position: absolute;
   top: 0;
@@ -45,11 +49,25 @@ body {
   padding: 0;
 }
 
+.riding-stance{
+  display: flex;
+  gap: 1em;
+  padding-top: 1em;
+  color: black;
+}
+
+.trick-bar{
+  border-color: black;
+  border-width: 0.1em;
+}
+
 .home-body {
   padding: 2em;
-  position: absolute;
+  position: fixed;
   top: 0vh;
   background-color: green;
+  z-index: 1;
+  
 }
 
 .dropdown-box {
